@@ -1,0 +1,49 @@
+4. #SVM Classifier
+
+#import the dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import sklearn as sk
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import cross_val_score
+from sklearn.metrics import accuracy_score
+
+#load the dataset
+data=sns.load_dataset("iris")
+print("Sample:\n",data.head())
+
+#Encoding the categorical column
+dataset=data.replace({"setosa":1,"versicolor":2,"virginica":3})
+print("Encoding the categorical column \n", dataset.head())
+
+#plot the correlation
+plt.figure(1)
+sns.heatmap(dataset.corr())
+plt.title('Correlation On iris Classes')
+plt.show()
+
+#splitting dataset
+X = dataset.iloc[:,:-1]
+y = dataset.iloc[:, -1].values
+print("features:\n", X)
+print("target:\n", y)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
+
+#creating SVM MODEL
+classifier = SVC(kernel = 'linear', random_state = 0)
+
+#Fit the model for the data
+classifier.fit(X_train, y_train)#train the model
+
+#Make the prediction
+y_pred = classifier.predict(X_test)
+
+#creating Confusion matrix
+cm = confusion_matrix(y_test, y_pred)
+print("Confusion matrix:\n", cm)
+accuracies = cross_val_score(estimator = classifier, X = X_train, y = y_train, cv = 10)
+print("Accuracy: ",accuracies.mean()*100," %")
+print("Standard Deviation: {:.2f} %".format(accuracies.std()*100))
