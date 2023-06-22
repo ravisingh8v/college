@@ -1,0 +1,46 @@
+#PoS Tagging using HMM and Nural model
+import nltk
+nltk.download('treebank')
+nltk.download('universal_tagset')
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from nltk.tag import HiddenMarkovModelTrainer
+from nltk.corpus import treebank
+#from sklearn_crfsuite import CRF
+
+# Prepare the training and test data
+sentences = treebank.tagged_sents(tagset='universal')
+train_data, test_data = train_test_split(sentences, test_size=0.2, random_state=42)
+
+# Prepare the input features and labels
+X_train = [[word for word, _ in sent] for sent in train_data]
+y_train = [[tag for _, tag in sent] for sent in train_data]
+X_test = [[word for word, _ in sent] for sent in test_data]
+y_test = [[tag for _, tag in sent] for sent in test_data]
+
+# Train and evaluate the neural model (CRF)
+# crf = CRF()
+# crf.fit(X_train, y_train)
+
+# Example input sentence
+sentence = "The quick brown fox jumps over the lazy dog"
+input_words = nltk.word_tokenize(sentence)
+
+# Perform POS tagging using CRF model
+#predicted_crf = crf.predict([input_words])[0]
+
+print("Input Sentence:")
+print(sentence)
+#print("\nCRF Output:")
+#print(predicted_crf)
+
+# Train and evaluate the HMM model
+trainer = HiddenMarkovModelTrainer()
+hmm = trainer.train_supervised(train_data)
+
+# Perform POS tagging using HMM model
+predicted_hmm = hmm.tag(input_words)
+
+print("\nHMM Output:")
+print(predicted_hmm)

@@ -1,0 +1,44 @@
+#to implement text summarization:
+
+import pandas as pd
+import numpy as np
+
+data = "They only assess content selection and do not account for other quality aspects, such as fluency, grammaticality, coherence, etc. To assess content selection, they rely mostly on lexical overlap, although an abstractive summary could express they same content as a reference without any lexical overlap.Given the subjectiveness of summarization and the correspondingly low agreement between annotators, the metrics were designed to be used with multiple reference summaries per input. However, recent datasets such as CNN/DailyMail and Gigaword provide only a single reference."
+
+import nltk
+from nltk.tokenize import word_tokenize, sent_tokenize
+nltk.download('stopwords')
+def solve(text):
+  stopwords1= set(nltk.corpus.stopwords.words("english"))
+  words = word_tokenize(text)
+  freqTable = {}
+  for word in words:
+    word = word.lower()
+    if word in stopwords1:
+      continue
+    if word in freqTable:
+      freqTable[word] += 1
+    else:
+      freqTable[word] = 1
+
+  sentences = sent_tokenize(text)
+  sentenceValue = {}
+  for sentence in sentences:
+    for word, freq in freqTable.items():
+      if word in sentence.lower():
+        if sentence in sentenceValue:
+          sentenceValue[sentence] += freq
+        else:
+          sentenceValue[sentence] = freq
+  sumValues = 0
+  for sentence in sentenceValue:
+    sumValues += sentenceValue[sentence]
+  average = int(sumValues / len(sentenceValue))
+
+  summary = ''
+  for sentence in sentences:
+    if (sentence in sentenceValue) and(sentenceValue[sentence] > (1.2 * average)):
+      summary += "" + sentence
+  return summary
+
+solve(data)

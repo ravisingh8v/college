@@ -1,0 +1,7 @@
+#program to implement tri-gram
+from nltk.util import ngrams
+n = 3
+sentence = 'Whoever is happy will make others happy too'
+unigrams = ngrams(sentence.split(), n)
+for item in unigrams:
+    print(item)

@@ -1,0 +1,12 @@
+#sentence_segmentation
+import nltk
+from nltk.tokenize import sent_tokenize
+nltk.download('punkt')
+text = "God is Great! I won a lottery."
+print("sentence_segmentation : ", sent_tokenize(text))
+
+#word_tokenize
+
+from nltk.tokenize import word_tokenize
+text = "God is Great! I won a lottery. word_tokenize "
+print("word_tokenize: ",(word_tokenize(text)))
