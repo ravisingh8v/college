@@ -1,0 +1,55 @@
+#1 Random walk
+
+import random
+
+# Create a dictionary representing the link structure
+links = {
+    'page1': ['page2', 'page3'],
+    'page2': ['page1', 'page4'],
+    'page3': ['page2'],
+    'page4': []
+}
+
+# Define the number of iterations for the random walk
+num_iterations = 100
+
+# Perform the random walk
+current_page = random.choice(list(links.keys()))
+random_walk = [current_page]
+
+for _ in range(num_iterations):
+    # Get the outgoing links from the current page
+    outgoing_links = links[current_page]
+
+    if outgoing_links:
+        next_page = random.choice(outgoing_links)
+    else:
+        # If the current page has no outgoing links, restart the random walk from a random page
+        next_page = random.choice(list(links.keys()))
+
+    # Append the next page to the random walk sequence
+    random_walk.append(next_page)
+
+    # Update the current page
+    current_page = next_page
+
+# Print the random walk sequence
+print("Random Walk")
+print(' -> '.join(random_walk))
+
+# Calculate the PageRank scores
+pagerank_scores = {}
+total_pages = len(set(links.keys()))
+
+for page in links.keys():
+    page_visits = random_walk.count(page)
+    pagerank_scores[page] = page_visits / num_iterations
+
+# Print the PageRank scores
+print("\nPageRank Scores:")
+for page, score in pagerank_scores.items():
+    print("{}: {}".format(page, score))
+
+print("\n")
+for page,score in pagerank_scores.items():
+  print("{} has a PageRank score of {}".format(page,score))

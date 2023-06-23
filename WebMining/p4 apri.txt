@@ -1,0 +1,29 @@
+#4 apriori 
+
+import pandas as pd
+from apyori import apriori
+
+# Load the dataset
+df = pd.read_csv('https://raw.githubusercontent.com/talumbau/strata_data/master/data/transactions.csv', header=None)
+
+print("Display Statics")
+print("===============")
+print(df.describe())
+
+print("\nShape:", df.shape)
+# Convert dataframe into a nested list
+database = []
+for i in range(len(df)):
+    database.append([str(df.values[i, j]) for j in range(len(df.columns))])
+
+# Perform association rule mining
+arm_rules = list(apriori(database, min_support=0.5, min_confidence=0.7, min_lift=1.2))
+
+# Display the number of rule(s)
+print('\nNo. of rule(s):', len(arm_rules))
+
+# Display the rule(s)
+print('\nResults: ')
+print('========')
+for rule in arm_rules:
+    print(rule)

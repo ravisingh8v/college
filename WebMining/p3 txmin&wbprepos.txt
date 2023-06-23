@@ -1,0 +1,27 @@
+#3 Text mining  and web page pre-processing 
+
+from bs4 import BeautifulSoup 
+import requests 
+# Step 1: Fetch webpage content 
+url = "https://www.google.com" 
+response = requests.get(url) 
+html_content = response.content 
+# Step 2: Parse HTML and extract meta information 
+soup = BeautifulSoup(html_content, "html.parser") 
+meta_tags = soup.find_all("meta") 
+# Step 3: Pre-process meta information 
+meta_text = "" 
+for tag in meta_tags: 
+ if tag.get("content"): meta_text += tag.get("content") + " " 
+# Perform cleaning and pre-processing on meta_text 
+# Step 4: Perform text mining and analysis 
+# Example: Word frequency analysis 
+word_counts = {} 
+words = meta_text.split() 
+for word in words: 
+ if word not in word_counts: word_counts[word] = 1 
+ else: word_counts[word] += 1 
+# Step 5: Visualization 
+# Example: Print word frequency counts 
+for word, count in word_counts.items(): 
+ print(f"{word}: {count}")
