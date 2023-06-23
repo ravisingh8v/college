@@ -1,0 +1,28 @@
+#plagiarism
+
+# from difflib module 
+import difflib
+from difflib import SequenceMatcher 
+
+# Declaring string variables 
+string1 = 'I am geek' 
+string2 = 'I am geeks' 
+# Using the SequenceMatcher() 
+match = SequenceMatcher(None,string1, string2) 
+# convert above output into ratio 
+# and multiplying it with 100 
+result = match.ratio() * 100 
+# Display the final result 
+print(int(result), "%") 
+
+# Upload the text files 
+uploaded1 = files.upload()
+uploaded2 = files.upload()
+
+# Read the uploaded files 
+file1 = uploaded1.decode('utf-8') 
+file2 = uploaded2.decode('utf-8') 
+# Comparing the contents of the files 
+similarity_ratio = SequenceMatcher(None, file1, file2).ratio() 
+# Converting the decimal ratio to percentage 
+plagiarism_percentage = int(similarity_ratio * 100)
