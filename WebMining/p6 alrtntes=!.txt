@@ -1,0 +1,25 @@
+#focused crawler 
+import requests
+from bs4 import BeautifulSoup
+
+url = "https://www.rottentomatoes.com/top/bestofrt"
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE'
+}
+
+response = requests.get(url, headers=headers)
+soup = BeautifulSoup(response.content, 'html.parser')
+
+movies_lst = []
+movies_table = soup.find('table', class_='table')
+if movies_table:
+    movies = movies_table.find_all('a')
+    for num, anchor in enumerate(movies, start=1):
+        urls = "https://www.rottentomatoes.com/beftfort/" + anchor["href"]
+        movies_lst.append(urls)
+        print(num, urls)
+else:
+    print("No movies found.")
+
+    print(movies_table)
+
