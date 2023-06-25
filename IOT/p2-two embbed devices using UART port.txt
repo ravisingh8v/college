@@ -1,0 +1,54 @@
+link of circuit : https://www.tinkercad.com/things/fxsWveIFEYd-pr2-two-embedded-devices-using-uart-port-with-code/editel?sharecode=98jlFdBbQwnLbTfl8NO74ZuWU-Wc1PhHqWWkb1dllGo
+
+
+
+Code for arduino 1 : 
+
+void setup() {
+ //set push button pin as input
+ pinMode(6, INPUT_PULLUP); 
+ //initialize UART with baud rate of 9600 bps
+ Serial.begin(9600); 
+}
+void loop() 
+{
+ {
+ if (digitalRead(6) == HIGH)
+ {
+ Serial.write('0');
+ Serial.println("HIGH");
+ }
+ else
+ {
+ Serial.write('1');
+ Serial.println("LOW");
+ }
+ }
+ delay(100);
+}
+
+
+
+code for Arduino 2 : 
+
+void setup() {
+ //set LED pin as output
+ pinMode(8, OUTPUT); 
+ //initialize UART with baud rate of 9600 bps
+ Serial.begin(9600); 
+}
+void loop() {
+ if(Serial.available()) 
+ {
+ //read one byte from serial buffer and save to data_rcvd
+ char data_received = Serial.read(); 
+ //if push button pressed switch LED On
+ if(data_received == '1') digitalWrite(8, HIGH);
+ //if push button is not pressed switch LED Off
+ if(data_received == '0') digitalWrite(8, LOW); 
+ }
+}
+
+
+
+

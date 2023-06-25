@@ -1,0 +1,46 @@
+Link of Circuit diagram : 
+https://www.tinkercad.com/things/g9vwQCTQPo3-pr5-record-the-movement-and-orientation-of-your-phone-and-given/editel?sharecode=S06zuqOZgzLVddyq0FFogCaY34ngvOPdx1qwUcThE_8
+
+
+
+
+code for Arduino : 
+
+#include <Servo.h>
+#include <SoftwareSerial.h>
+
+int pos = 0;
+int sensorValue = 0;
+int i = 0;
+
+Servo servo_9;
+
+void setup() {
+  servo_9.attach(9);
+  pinMode(A0, INPUT);
+  pinMode(1, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  sensorValue = analogRead(A0);
+  pos = map(sensorValue, 0, 1023, 0, 180);
+
+  for (i = 0; i <= pos; i++) {
+    if (i == 90) {
+      Serial.println("Landscape");
+    } else if (i == 180 || i == 0) {
+      Serial.println("Portrait");
+    }
+    servo_9.write(i);
+    delay(15);
+  }
+
+  for (i = pos; i >= 0; i--) {
+    if (i == 90) {
+      Serial.println("Landscape");
+    }
+    servo_9.write(i);
+    delay(15);
+  }
+}
