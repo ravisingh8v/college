@@ -1,0 +1,77 @@
+1.download library from my github ravisingh8v/college/IOT
+
+2.cut and paste them into protus 8 library folder :- for that just right click on protus software and click on "open file location" option
+you will be on bin folder just one step back from there and click on Data and then Library and then paste the downloaded library
+
+3.now open protus software
+
+4.click on file and click new project
+
+5.click on P icon to pick devices
+
+6. search for arduino uno and select the compomnent then click ok
+
+7. search for rain sensor there will be two result select first (the black one)
+
+8.search for logic toggle and select
+
+9.after that pick all component that we are added drop them into the workspace
+
+10.now from left side look for virtual termial and drop into workspace
+
+11.now connect RXD from terminal to PD1/TXD of arduino
+
+12. connect TXD from terminal to PD0/RXD of arduino
+
+13.connect OUT from rain sensor to PD2/INTO of arduino
+
+14. now pick from left side terminal bar a ground component and then connect GND from rain sensor to that picked ground component.
+
+15.pick a DC from generator tab and then connect rain sensor vcc to DC
+
+16. pick logic toggle that we have added in starting and connect it to TestPin
+
+17. now double click on rain sensor and in program file option choose file hex file of rain sesnor that we have downloaded.
+
+18. next is to program the arduino for that open arduino IDE application
+
+19. create a new file then select board (from dropdown menu )if not available search for that "arduino uno" and click ok
+
+20. copy this code there (arduino code): 
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(2, INPUT);
+}
+
+void loop() {
+  int rain_sensor = digitalRead(2);
+  if(rain_sensor == 1){
+    Serial.println("It's raining");
+    delay(500);
+  }
+  if(rain_sensor == 0){
+    Serial.println("It's not raining");
+    delay(500);
+  }
+}
+
+
+21. then save the file from file tab in your prefered place.
+
+22. now the app fill reopen and then click on right button to compile and check error if any
+
+23. now go to sketch menu and select export compiled binary so it will generate hex file for that code
+
+24.now go to folder where saved the file because now he created the file in that location named as build
+
+25. go to build and click arduino and then you will se hex file of our code  
+
+26. we need to import this hex file into our protus app now in arduino uno
+
+27. open again protus double click on arduino
+
+28. in program browse for that file and select.
+
+29. now click on play button to start simulation it will open the terminal with output that "its not raining" then click on logic toggle to toggle the condition to see the raining output.
+
