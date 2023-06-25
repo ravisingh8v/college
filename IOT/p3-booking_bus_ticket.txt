@@ -1,0 +1,32 @@
+this is not completed skip this practical
+
+
+1. take LCD and take MCU-PT, RFD Reader, DCL100 Gateway, Pc-pt, door door, PFD Card
+
+
+2.give condition to PC (i. :enable,name:reader valid, reder status is valid, set door to unlock  ii. :eneable, name:Reader Invalid, condition : redaer status is invalid, action: set dor lock to lock)
+
+3.
+
+
+code for MCU:
+
+from gpio import *
+from time import *
+from ioeclient import IoEClient
+
+def main():
+pinMode(0,OUT)
+pinMode(1,IN)
+
+while True:
+customWrite(0,"waiting")
+rfid=analogRead(A1)
+if rfid==0:
+customWrite(0,"success")
+delay(3000)
+
+if __name__ == "__main__":
+main()
+
+Code for Reader
