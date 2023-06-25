@@ -1,0 +1,33 @@
+1. open protus 8 app
+
+2.create new file
+
+3.click on P icon select circuits and components that we want to draw
+
+4.select 4 2N309 (Q5,Q6,Q7,Q8)  and place in straight vertical line
+
+5. and then take 4 LED-GREEN (D5,D6,D7,D8) and place them in from of 2N309 in same manner parallely
+
+6.connect 2N309 Q5 from bottom to D5 LED-GREEN to top and other three with all other D5 from top of LED-GREEN 
+
+7. in Bottom of LED-GREEN connect GROUnds from menu
+
+8.from top of 2N309 connect DC(Q1,Q2,Q3,Q4) from generator menu and set DC voltage to 5
+
+9.using component create a water tank
+
+10. by right clicking on water tank click on make device
+
+11. set every thing to default and choose category as mechanics and check the attach hiierarchy module
+
+12. Go to child area and choose 4 inputs and 4 outputs and connect them- all input in left in vertical direct on water tank and outputwill be on right side of water tank in vertical straight line and the water tank is left from 2N309
+
+
+13. then connct the output child to 2N309 left part
+
+14.select logic toggle and place them vertically in left of input and water tank and connect each logic toggle with each input
+
+15.for output just click on bottom to up on logic toggle to change its condition to false to true
+
+
+
