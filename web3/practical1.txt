@@ -1,0 +1,29 @@
+#Install and understand Docker container, Node.js, Java and Hyperledger 
+Fabric, Ethereum and perform necessary software installation on local 
+machine/create instance on Cloud to run. 
+
+1. Docker Container 
+=> sudo apt install docker docker-compose
+
+2. Node.js
+=> sudo apt install nodejs npm
+
+3. Java
+=> sudo apt install default-jdk default-jre 
+=> update-alternatives --config java 
+=> sudo nano /etc/environment 
+
+JAVA_HOME=/url/lib/jvm/java-11-openjdk-amd64/bin/java
+
+=> source /etc/environment
+=> echo $JAVA_HOME
+
+4. install maven
+=> sudo apn install maven
+=> mvn -v
+
+5. Hyperledger fabric
+=> sudo apt install python curl golang-go
+=> curl -sSL http://bit.ly/2ysbOFE | bash -s 1.4.4
+
+
