@@ -1,0 +1,62 @@
+1. setup the blockchain
+
+Clone the repo using following command
+
+=> mkdir hyper__ledger
+=> cd hyper__ledger
+=> git clone  https://github.com/IBM/blockchain-application-using-fabric-java-sdk
+
+ output: *****
+
+Giving Permission for clone folder 
+=> Desktop/hyper__ledger $chmod 777 -R blockchain-application-using-fabric-java-sdk
+
+
+Creating and starting a Network 
+=> Desktop/hyper__ledger/blockchain-application-using-fabric-java-sdk/network$ 
+cd network 
+=> Desktop/hyper__ledger/blockchain-application-using-fabric-java-sdk/network$ 
+chmod +x build.sh 
+=> Desktop/hyper__ledger/blockchain-application-using-fabric-java-sdk/network$ 
+sudo ./build.sh 
+
+output: ***
+
+
+
+2. Build the client based on Fabric Java SDK
+
+=> Open a command terminal and navigate to the java directory in the repo. Run 
+the command mvn install. 
+=> Desktop/hyper__ledger/blockchain-application-using-fabric-java-sdk/network$ 
+cd ../java 
+=> Desktop/hyper__ledger/blockchain-application-using-fabric-java-sdk/java$ mvn install
+
+
+=> cd target
+
+=> cp blockchain-java-sdk-0.0.1-SNAPSHOT-jar-with-dependencies.jar blockchain-client.jar
+
+=> cp blockchain-client.jar ../../network_resources
+
+
+3. Create and Initialize the channel 
+
+=> cd ../../network_resources
+=> java -cp blockchain-client.jar org.example.network.CreateChannel 
+
+output: ***
+
+
+4. Deploy and Instantiate the chaincode
+
+=> java -cp blockchain-client.jar org.example.network.DeployInstantiateChaincode
+
+output : ***
+
+
+5. Register and enroll users
+
+=> java -cp blockchain-client.jar org.example.user.RegisterEnrollUser
+
+output : ***
