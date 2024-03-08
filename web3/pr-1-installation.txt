@@ -19,7 +19,7 @@ JAVA_HOME=/url/lib/jvm/java-11-openjdk-amd64/bin/java
 => echo $JAVA_HOME
 
 4. install maven
-=> sudo apn install maven
+=> sudo apt install maven
 => mvn -v
 
 5. Hyperledger fabric
