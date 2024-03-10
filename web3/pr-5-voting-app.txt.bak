@@ -13,7 +13,6 @@ git clone https://github.com/IBM/vote-hyperledger-ethereum
 => ./start.sh 
 
 ########if not worked then do this in same folder ########
-
 docker pull hyperledger/fabric-peer
 docker pull hyperledger/fabric-orderer
 docker pull hyperledger/fabric-ca
