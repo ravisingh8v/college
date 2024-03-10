@@ -1,0 +1,75 @@
+1.Launch the network 
+
+#Navigate to the fabcar subdirectory within your local clone 
+
+=> curl -sSL http://bit.ly/2ysbOFE | bash -s 1.4.4  
+
+#of the fabric-samples repo. 
+
+==> cd fabric-samples/fabcar 
+
+#Launch your network using the startFabric.sh shell script. 
+==> sudo ./startFabric.sh javascript 
+
+2. Install The application 
+
+==> cd javascript
+
+==>npm install
+
+==>ls
+
+output ***
+
+3. enrolling the admin user
+
+Let's enroll admin user
+
+==> node enrollAdmin.js
+
+==> node registerUser.js
+
+==> node query.js
+
+output ***
+
+
+=> const result = await contract.evaluateTransaction('queryCar', 'CAR4');
+
+4. Save the program and navigate back to your fabcar/javascript directory. Now
+run the query program again:
+=> node query.js
+Output:***
+
+=> await contract.submitTransaction('createCar', 'CAR12', 'Honda', 'Accord',
+'Black', 'Tom');
+
+=> node invoke.js
+
+Output: ***
+
+=> await contract.submitTransaction('createCar', 'CAR12', 'Honda', 'Accord',
+'Black', 'Tom');
+
+#To see that this transaction has been written to the ledger, go back
+to query.js and change the argument from CAR4 to CAR12.
+In other words, change this:
+
+# const result = await contract.evaluateTransaction('queryCar', 'CAR4');
+To this:
+# const result = await contract.evaluateTransaction('queryCar', 'CAR12');
+# Save once again, then query:
+
+=> node query.js
+
+Output:***
+-----------------------------------------------------------------------------------------
+
+#To do this, go back to invoke.js and change the smart contract transaction from 
+createCar to changeCarOwner with a corresponding change in input arguments:
+=> await contract.submitTransaction('changeCarOwner', 'CAR12', 'Dave');
+
+# The first argument --- CAR12 --- identifies the car that will be changing owners.
+# The second argument --- Dave --- defines the new owner of the car.
+# Save and execute the program again:
+=> node invoke.js

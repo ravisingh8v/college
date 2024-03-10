@@ -1,0 +1,47 @@
+PRACTICAL 6
+Aim :- Develop an IoT asset tracking app using Block chain. Use an IoT asset tracking device to
+improve a supply chain by using Block chain, IoT devices, and Node-RED
+
+
+#Import the sample perishable network into Hyperledger Composer Playground
+
+=> 1. Access the IBM Hyperledger Composer Playground.
+=> 2. Click on Deploy a new business network
+=> 3. Scroll down and choose perishable-network from the samples on npm.
+=> 4. Scrolling back to the top, you should now have a business network name of xxx-perishable-network.
+
+#Note: The unique identifier becomes very important later on in this code pattern because this business
+network name is used to create a rest server on the IBM Cloud. If the name is not unique then it will fail
+during the build process.
+
+=> 5. Give the network admin card that will be created a name admin@xxx-perishable-network.
+
+
+###Node-RED - IoT Asset Tracker Introduction
+
+
+-> Create an account and log into IBM Cloud
+-> Click on the Catalog 
+(1) and search for 'internet of things' 
+(2) The Internet of Things Platform Starter you can see in result
+(3) click on that and now set the App name but make it unique with using (ex. IoTAssetTracker-ravi)
+(4) then click on create button
+(5) now wait for status to show green color after that visit the URL
+(6) now in new tab open node_red by writing in cmd (=> node node-red) in linux cmd (node-red)
+(7) now in that install additional node red nodes for that
+(8) click on menu then click manage palette
+(9) then go to install 
+(10) inside that search for node-red-dashboard
+(11) now install it.
+
+(12) now again go to menu 
+(13) click on import button
+(14) click clipboard
+(15) now in import node paste this : - code from git repo link 
+=> https://github.com/johnwalicki/IoT-AssetTracking-Perishable-Network-Blockchain/blob/master/Node-RED/flows/IoTAssetTracker-AllFlows.json
+
+(17) after paste just click on import button
+
+###Initialize the Perishable Blockchain / Node-RED flow
+
+Now I dont from here.

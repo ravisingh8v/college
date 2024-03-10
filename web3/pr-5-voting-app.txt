@@ -1,0 +1,42 @@
+PRACTICAL :- 5
+Aim :- Develop a voting application using Hyperledger and Ethereum. Build a decentralized app
+that combines Ethereum's Web3 and Solidity smart contracts with Hyperledger's hosting Fabric and
+Chaincode EVM
+
+#prereq: Make sure to have the following prerequisite tools are installed on your machine: NPM, Node, Go, Docker. Their versions used for this code (respectively): v6.4.1, v10.10.0, v1.9.3 darwin/amd64, v18.06.1-ce.
+
+1. clone the repo in any of your folder
+
+git clone https://github.com/IBM/vote-hyperledger-ethereum
+
+2. run this script file
+=> ./start.sh 
+
+3. copy/paste the following sections in the same terminal:
+
+=> export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+=> export CORE_PEER_ADDRESS=peer0.org1.example.com:7051
+=> export CORE_PEER_LOCALMSPID="Org1MSP"
+=> export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+
+4. COPY/PASTE THIS SECTION IN THE TERMINAL
+=> peer chaincode install -n evmcc -l golang -v 0 -p github.com/hyperledger/fabric-chaincodeevm/evmcc
+=> peer chaincode instantiate -n evmcc -v 0 -C mychannel -c '{"Args":[]}' -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+
+5. RUN this script file in a NEW separate terminal
+=> ./proxy.sh
+
+# The fab3 proxy will be available at `localhost:5000`.
+
+=> cd web3-fabric-voting-dapp
+
+=> npm install
+
+=> npm start
+
+Open your browser at localhost:3000 to view the app.
+
+
+
+
+

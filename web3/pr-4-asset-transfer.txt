@@ -1,0 +1,227 @@
+Practical 4:
+#Deploy an asset-transfer app using block chain. Learn app development
+#within a Hyperledger Fabric network.
+
+
+
+#Install the latest version of Hyperledger using
+=> curl -sSL http://bit.ly/2ysbOFE | bash -s
+
+#Install the compatible go version for asset application
+=> sudo snap install go --channel
+
+#Give permission to folder
+=> sudo chmod 777 -R fabric-samples/
+=> cd fabric-samples/test-network
+
+1.Running the secured asset transfer smart contract
+#You can use the Fabric test network to run the secured asset transfer smart
+#contract. The test network contains two peer organizations, Org1 and Org2, that
+#operate one peer each. In this tutorial, we will deploy the smart contract to a
+#channel of the test network joined by both organizations. We will first create an
+#asset that is owned by Org1. After the two organizations agree on the asset
+#properties and price, we will transfer the asset from Org1 to Org2.
+
+2.Deploy the test network
+#We are going to use the Fabric test network to run the secured asset transfer
+#smart contract. Open a command terminal and navigate to test network directory
+
+=> cd fabric-samples/test-network
+
+#First, bring down any running instances of the test network:
+=> ./network.sh down
+
+#You can then deploy a new instance the network with the following command:
+=> ./network.sh up createChannel -c mychannel
+
+Output:***
+
+
+#3.Deploy the smart contract
+#You can use the test network script to deploy the secured asset transfer smart
+#contract to the channel. Run the following command to deploy the smart
+#contract to mychannel:
+
+=> ./network.sh deployCC -ccn secured -ccp ../asset-transfer-secured-agreement/chaincode-go/ -ccl go -ccep
+
+#"OR('Org1MSP.peer','Org2MSP.peer')"
+
+=> export PATH=${PWD}/../bin:${PWD}:$PATH
+=> export FABRIC_CFG_PATH=$PWD/../config/
+=> export CORE_PEER_TLS_ENABLED=true
+=> export CORE_PEER_LOCALMSPID="Org1MSP"
+=> export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+=> export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+=> export CORE_PEER_ADDRESS=localhost:7051
+
+
+=> export PATH=${PWD}/../bin:${PWD}:$PATH
+=> export FABRIC_CFG_PATH=$PWD/../config/
+=> export CORE_PEER_TLS_ENABLED=true
+=> export CORE_PEER_LOCALMSPID="Org2MSP"
+=> export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
+=> export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
+=> export CORE_PEER_ADDRESS=localhost:9051
+
+#4.Create an asset
+
+=> export ASSET_PROPERTIES=$(echo -n "{\"object_type\":\"asset_properties\",\"color\":\"blue\",\"size\":35,\"salt\":\"
+a94a8fe5ccb19ba61c4c0873d391e987982fbbd3\"}" | base64 | tr -d \\n)
+
+#We can now use the following command to create an asset that belongs to Org1.
+=> peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n secured -c '{"function":"CreateAsset","Args":["A new asset for Org1MSP"]}' --transient "{\"asset_properties\":\"$ASSET_PROPERTIES\"}"
+
+output:- ***
+
+=> export ASSET_ID=d9923f21b770adbc79cbcc47a3aeecc81dc7f030bd129155301ce3932be7fbcc
+
+=> peer chaincode query -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n secured -c "{\"function\":\"GetAssetPrivateProperties\",\"Args\":[\"$ASSET_ID\"]}"
+
+Output: ***
+
+#We can also query the ledger to see the public ownership record:
+=> peer chaincode query -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n secured -c "{\"function\":\"ReadAsset\",\"Args\":[\"$ASSET_ID\"]}"
+
+#The command will return the record that the asset is owned by Org1:
+Output:***
+
+=> peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n secured -c "{\"function\":\"ChangePublicDescription\",\"Args\":[\"$ASSET_ID\",\"This asset
+is for sale\"]}"
+
+output:***
+
+#Query the ledger again to see the updated description:
+=> peer chaincode query -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n secured -c "{\"function\":\"ReadAsset\",\"Args\":[\"$ASSET_ID\"]}"
+
+We can now see that the asset is for sale:
+Output:***
+
+
+#public asset data:
+=> export
+ASSET_ID=d9923f21b770adbc79cbcc47a3aeecc81dc7f030bd129155301ce3932be7fbcc
+
+=> peer chaincode query -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n secured -c "{\"function\":\"ReadAsset\",\"Args\":[\"$ASSET_ID\"]}"
+
+From this query, Org2 learns that the asset is for sale:
+
+Output: ***
+
+=> peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n secured -c "{\"function\":\"ChangePublicDescription\",\"Args\":[\"$ASSET_ID\",\"the worst
+asset\"]}"
+
+Output:***
+
+#5. Agree to sell the asset
+#To sell an asset, both the buyer and the seller must agree on an asset price and
+#make sure that they both have the same asset properties in their respective
+#private data collections. Each party stores the price that they agree to in their
+#own private data collection. The private asset transfer smart contract enforces
+#that both parties need to agree to the same price and asset properties before the
+#asset can be transferred.
+
+6.Agree to sell as Org1
+
+=> export ASSET_PRICE=$(echo -n "{\"asset_id\":\"$ASSET_ID\",\"trade_id\":\"109f4b3c50d7b0df729d299bc6f8
+e9ef9066971f\",\"price\":110}" | base64 | tr -d \\n)
+
+=> peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n secured -c "{\"function\":\"AgreeToSell\",\"Args\":[\"$ASSET_ID\"]}" --transient "{\"asset_price\":\"$ASSET_PRICE\"}"
+
+output:***
+
+=> peer chaincode query -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n
+secured -c "{\"function\":\"GetAssetSalesPrice\",\"Args\":[\"$ASSET_ID\"]}"
+
+output:***
+
+7.Agree to buy as Org2
+
+=> export ASSET_PROPERTIES=$(echo -n "{\"object_type\":\"asset_properties\",\"color\":\"blue\",\"size\":35,\"salt\":\"
+a94a8fe5ccb19ba61c4c0873d391e987982fbbd3\"}" | base64 | tr -d \\n)
+
+=> peer chaincode query -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/order
+er.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n secured -c
+"{\"function\":\"VerifyAssetProperties\",\"Args\":[\"$ASSET_ID\"]}" --
+transient "{\"asset_properties\":\"$ASSET_PROPERTIES\"}"
+
+output: ***
+
+=> export ASSET_PRICE=$(echo -n "{\"asset_id\":\"$ASSET_ID\",\"trade_id\":\"109f4b3c50d7b0df729d299bc6f8
+e9ef9066971f\",\"price\":100}" | base64 | tr -d \\n)
+
+=> export ASSET_PROPERTIES=$(echo -n "{\"object_type\":\"asset_properties\",\"color\":\"blue\",\"size\":35,\"salt\":\"
+a94a8fe5ccb19ba61c4c0873d391e987982fbbd3\"}" | base64 | tr -d \\n)
+
+=> peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel
+-n secured -c "{\"function\":\"AgreeToBuy\",\"Args\":[\"$ASSET_ID\"]}" --
+transient "{\"asset_price\":\"$ASSET_PRICE\",\"asset_properties\":\"$ASSET_PROPERTIES\"}"
+
+output:***
+
+#You can read the agreed purchase price from the Org2 implicit data collection:
+=> peer chaincode query -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n
+secured -c "{\"function\":\"GetAssetBidPrice\",\"Args\":[\"$ASSET_ID\"]}"
+
+output:***
+
+8.Transfer the asset from Org1 to Org2
+
+=> peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n
+secured -c "{\"function\":\"TransferAsset\",\"Args\":[\"$ASSET_ID\",\"Org2MSP\"]}" --
+transient "{\"asset_price\":\"$ASSET_PRICE\"}" --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles
+"${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt"
+
+Output:***
+
+=> export ASSET_PRICE=$(echo -n "{\"asset_id\":\"$ASSET_ID\",\"trade_id\":\"109f4b3c50d7b0df729d299bc6f8
+e9ef9066971f\",\"price\":100}" | base64 | tr -d \\n)
+=> peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel
+-n secured -c "{\"function\":\"AgreeToSell\",\"Args\":[\"$ASSET_ID\",\"Org2MSP\"]}" --transient "{\"asset_price\":\"$ASSET_PRICE\"}"
+
+output:***
+
+=> peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n secured -c
+"{\"function\":\"TransferAsset\",\"Args\":[\"$ASSET_ID\",\"Org2MSP\"]}" --
+transient "{\"asset_price\":\"$ASSET_PRICE\"}" --peerAddresses localhost:7051 --tlsRootCertFiles
+"${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles
+"${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt"
+
+output:***
+
+=> peer chaincode query -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n secured -c "{\"function\":\"ReadAsset\",\"Args\":[\"$ASSET_ID\"]}"
+
+Output:***
+
+=> peer chaincode query -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile
+"${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n secured -c "{\"function\":\"GetAssetPrivateProperties\",\"Args\":[\"$ASSET_ID\"]}"
+
+=> peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile
+"${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n secured -c
+"{\"function\":\"ChangePublicDescription\",\"Args\":[\"$ASSET_ID\",\"This asset is not for sale\"]}"
+
+output:***
+
+=> peer chaincode query -o localhost:7050 --ordererTLSHostnameOverride
+orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n secured -c "{\"function\":\"ReadAsset\",\"Args\":[\"$ASSET_ID\"]}"
+
+#9.Clean up
+./netowrk.sh down
+
