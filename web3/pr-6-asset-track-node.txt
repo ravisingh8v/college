@@ -24,7 +24,7 @@ during the build process.
 -> Click on the Catalog 
 (1) and search for 'internet of things' 
 (2) The Internet of Things Platform Starter you can see in result
-(3) click on that and now set the App name but make it unique with using (ex. IoTAssetTracker-ravi)
+(3) click on that and now set the App name but make it unique with using (ex. IoTAssetTracker-mukesh)
 (4) then click on create button
 (5) now wait for status to show green color after that visit the URL
 (6) now in new tab open node_red by writing in cmd (=> node node-red) in linux cmd (node-red)
