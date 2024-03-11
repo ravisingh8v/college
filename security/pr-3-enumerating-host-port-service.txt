@@ -1,0 +1,47 @@
+1)Enumerating hosts 
+Enumerating hosts Host enumeration is the process of gaining specific particulars regarding a 
+defined host. 
+Live host discovery The first step is to run network ping sweeps against a target address space and 
+look for responses that indicate that a particular target is live and capable of responding.
+
+==> sudo nping www.facebook.com
+
+2)Writing your own port scanner using netcat  
+Fingerprinting the operating system 
+While attackers utilize the proxying application and Tor network, it is also possible to write their own 
+custom network port scanner. 
+Determining the OS of a remote system is conducted using two types of scans:  
+ Active fingerprinting: The attacker sends normal and malformed packets to the target and 
+records its response pattern, referred to as the fingerprint. 
+ Passive fingerprinting: The attacker sniffs—or records—and analyzes the packet stream to 
+determine the characteristics of the packets.
+
+==>sudo nmap -sS -O 217.21.91.79
+==>nc -v -z www.guimp.com 1-5000
+
+a)Identification and enumeration of internal network hosts 
+==>ifconfig
+==>cat /etc/resolv.conf
+
+b)ARP broadcasting 
+==>sudo arp-scan 217.21.91.79
+
+c)Ping sweep 
+==>nmap -sP -PT 80 10.10.10.80/24
+==>fping -g 10.10.10.80/24
+
+d)Native MS Windows commands Nslookup 
+==>nslookup www.facebook.com
+
+==>netstat -n -o
+
+e)Taking advantage of SNMP 
+==>sudo snmpwalk -c public 50.24.32.130 -v1
+==>msfconsole
+
+f)Locating network shares
+==>enum4linux 10.10.10.100
+
+g)Reconnaissance of active directory domain servers
+==>rpcclient -U "administrator" 10.10.10.100
+

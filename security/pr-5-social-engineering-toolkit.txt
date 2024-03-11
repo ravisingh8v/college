@@ -1,0 +1,19 @@
+Q.1 Practical on use of social engineering toolkit
+
+1)Credential Harvester web attack method
+
+=> git clone https://github.com/trustedsec/social-engineer-toolkit.git
+=> cd social-engineer-toolkit
+=> sudo apt install python3-pip python3-tk xterm
+=> sudo python3 setup.py install
+=> sudo setoolkit
+
+then you got setoolkit
+
+=> type 1 and then enter
+=> 2
+=>3
+=>1
+=>
+=> 3
+=> 

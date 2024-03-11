@@ -1,0 +1,167 @@
+Q.1 Use of open-source intelligence and passive reconnaissance
+
+1. Gather Domain Information
+
+Install Sublist3r
+
+=> sudo apt install sublist3r
+
+if its not work you have to install it manually
+=> git clone https://github.com/aboul3la/Sublist3r.git
+=> cd Sublist3r
+=> sudo apt install python-pip
+=> sudo pip3 install -r requirements.txt
+=> python3 sublist3r.py -h
+
+output ***
+
+2.OSRframework
+
+Go to root directory then 
+
+#usufy
+=> pip install osrfamework --user
+=> sudo usufy.py -n aliabhatt
+
+if its not work you have to install it manually
+
+=> git clone git clone https://github.com/i3visio/osrframework.git
+=> cd osrframework
+=> sudo pip3 install -r requirements.txt
+=> python3 usufy.py -n aliabhatt
+
+
+output: ***
+then open any link in browser
+
+#malify
+
+=> sudo mailfy -n cyberhia
+
+output: **
+
+#searchfy
+
+=> sudo searchfy -q "cyberhia"
+
+output: **
+
+3.Web archives
+When something is deleted from the internet, it is not necessarily completely deleted from 
+everywhere. Every page that is visited by Google is backed up as a snapshot in Google’s cache 
+servers
+
+ - go to https://web.archive.org/web/
+ - search for cyberhia.com
+ - then see the screenshot for any specific date or time
+
+4.Scrapping
+
+a) gather username and email addresses
+
+=> sudo theHarvester -d facebook.com -l 100 -b google
+
+ (if not work)
+[
+    => git clone https://github.com/laramies/theHarvester.git
+    => cd theHarvester
+    => sudo pip3 install -r requirements.txt
+    => python3 theHarvester.py -d example.com -l 100 -b google
+
+]
+
+this find the subdomain email address and username for popular Domain
+
+b) Obtaining user Information
+Many penetration testers gather usernames and email addresses, as this information is frequently 
+used to log on to targeted systems. The most commonly employed tool is the web browser, which is 
+used to manually search the target organization’s website as well as third-party sites, such as 
+LinkedIn or other social networking websites. 
+
+  - GO to tineye.com 
+  - search for any person or anything just by dragging drop the image or putting image url
+
+c) Online Search portals
+Shodan is one of the most important search engines available, as it lets anyone on the internet find 
+devices connected to the internet using a variety of filters. It can be accessed by visiting 
+https://www.shodan.io/
+
+ - go to following link and Search anything
+ - you can find all the related info about your system
+
+d) Censys
+Attackers can also utilize the censys.io API for relevant information gathering; this can provide more 
+information about IPv4 hosts, websites, certifications, and other stored information. Information 
+about cyberhia.com: 
+
+e) SpiderFoot
+=> spiderfoot -l 10.0.2.15:8009
+
+output: ***
+
+- it will give the site link go to that link
+- click on setting and add all the API keys that you might already have; an example, the AbusIPDB.com API key (you can create this 
+key by visiting abuseIPDB) is added to SpiderFoot, as shown in Figure; then save the changes. This 
+can similarly be done for all the APIs that require tokens or API keys:
+- click on New Scan
+- type the scan name and the seed target, which is our target organization’s primary domain, and select the options
+- now The archive of the OSINT performed using SpiderFoot could be accessed by clicking on the Scans tab, 
+which will provide all of the past and current running scans
+
+5. Google hacking database
+
+a) Data dump sites
+- Any information can be shared online quickly and more effectively with the birth of apps such as 
+pastebin.com.
+
+- paste the url and if aksing for login just login to their site
+
+b) defensive OSINT
+Defensive OSINT is typically used to see what is already on the internet, including breached 
+information; it is also used to see whether that information is valuable during penetration testing. 
+Defensive OSINT is largely divided into three places of search.
+
+
+# Dark web 
+The dark web is the encrypted network that exists between Tor servers and their clients, whereas 
+the deep web is simply the content of databases and other web services that for one reason or 
+another cannot be indexed by conventional search engines, such as Google. 
+
+Let’s take an example of 
+- expired drugs or banned drugs that can be sold on the dark web. 
+- We will explore how to identify information on the dark web using the Tor browser. Some websites, such as https://dark.fail/, 
+provide a market list of hidden deep web links. 
+
+
+# Security breaches 
+A security breach is any incident that results in unauthorized access to data, applications, services, 
+networks, and/or devices, by bypassing their underlying security mechanisms. 
+
+- Hackers are known to visit the following websites: 
+- https://haveibeenpwned.com 
+- https://haveibeenzuckered.com/ 
+These websites contain an archive of breached data. 
+
+The following screenshot provides information about whether your email ID was breached as part of 
+the recent Facebook breach: https://www.businessinsider.com/stolen-data-of-533-million-facebook-users-leaked-online-2021-4?r=US&IR=T: 
+
+#To harvest more information about a target, pentesters can look into websites such as zone-h.com, 
+which provide information about breaches. 
+
+For example, a defacement of chinaseeds.com was 
+performed by a threat actor group named Moroccohackteam. 
+
+### Public records 
+Public records can be utilized to form a password list based on the information that is available to 
+profile an individual. One such example is a public record of individuals, such as FindMyPast 
+
+### Profiling users for password lists 
+Common User Password Profiler (CUPP) allows the pentester to generate a wordlist that is specific 
+to a particular user. 
+ 
+=> sudo apt install cupp 
+=> cupp –i 
+
+This will launch CUPP in interactive mode, which prompts the user for specific elements of 
+information to use in creating wordlists 
+ 

@@ -1,0 +1,70 @@
+Q.1: Exploring and building a varification lab for  penetration testing (Kali linux)
+
+Steps:- 
+1. install virtual box or vmware workstation from official site.
+2. during installation set RAM atleast 1 or 2 gb and storage atleast 15gb
+3. now in our main "windows" system go to following path
+   c:\program files\oracle\virtualbox\ or if you using vmware workstation then go C:\program files\vmWARE\vmware player\
+and open cmd and enter this :
+
+=> VBoxManage natnetwork add --netname InsideNetwork --network "10.10.10.0/24" –-enable --dhcp on 
+
+4. Install windows server 2016 in window os from
+   https://www.microsoft.com/en-us/evalcenter/evaluatewindows-server-2016-essentials
+
+   with that we can perform below steps :
+
+5. Ensure network adaptor is connected to the right network.
+6. now open VMBox and click on virtual machine and click on settings.
+7. then from the menu, click on network -enable network in checked.
+
+8. login to windows server 2016
+9. after that open cmd line and write following command:
+   netsh interface ip set address "ethernet" static 10.10.10.100 255.255.255.0 10.10.10.1
+10.From server manager click on Add roles and features
+11.select role base or featurebased installation and click next
+12.then select server keep it selected default one and go next
+13.from server roles page, place a checkmark in the checkbox next to active Directory domain services. additionaly roles, services, or features are also required to install Domain services : click add features and click on Next.
+14.Select optional  features to install during the AD DS installation by placing a checkk in the box next to any desired features, and click on next.
+15.that should take us to the confirmation screen with all the selected features and services; click on install and when the installation is completed click on close
+16.select ad ds; it should come up with a warning starting: configuration required for active directory domain services. now click on more for post-deployment configuration
+17.click on Promote this server to domain controler.
+18.select add new forest and enter the fully qualified Domain name (FQDN). in this example, we will create a new FQDN called mastering.cali.fourthedition. then click Next
+19. On the next screen, for both Forest functional level and Domain functional level, select Windows 
+Server 2016 and type the password for Directory Services Restore Mode (DSRM); click Next
+20. Do not select the DNS delegation—directly click on Next, where it should pick up the NetBIOS 
+domain name as MASTERING. Click Next
+21. Select the locations for the database, log files, and SYSVOL for Active Directory, and finally, you 
+should be presented with a review screen, as shown in Figure; click Next:
+22. All the prerequisites must be met. Ignore the warnings; after this, click on Install. 
+23. On the Confirm installation selections screen, review the installation and then click Install. Doing 
+so should reboot the system and a newActive Directory server with a domain controller should have 
+been established.
+
+To create a normal user on the domain, run the following command in the command line on the 
+domain controller:
+#In windows server 2016 
+=>net user normaluser Passw0rd12 /add /domain 
+=>net user admin Passw0rd123 /add /domain 
+=>net group "domain admins" admin /add /domain
+
+=>net user exchangeadmin Passw0rd123 /add /domain 
+=>net group "domain admins" exchangeadmin /add /domain 
+=>net group "Schema admins" exchangeadmin /add /domain 
+=>net group "Enterprise admins" exchangeadmin /add /domain 
+
+##Metasploit 2
+Download Metasploitable from below mentioned link
+https://sourceforge.net/projects/metasploitable/files/Metasploitable2/ 
+
+
+1.Once you have downloaded the file from the above link. Extract the file. This is a very curial step 
+otherwise the file will not be uploaded in the VM. 
+
+2.Once you click on New option, you will have to Name. In this case I put the name as 
+“Metaexploitable”, Type: Linux and 
+change Version: Other Linux (64-bit) and click on Next. 
+
+3. Create a virtual hard disk 
+
+set id and password
