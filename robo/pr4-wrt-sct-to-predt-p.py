@@ -15,6 +15,7 @@ Motor2 = {'EN': 17, 'input1': 27, 'input2': 22}
 
 for pin in Motor1.values():
     GPIO.setup(pin, GPIO.OUT)
+    
 for pin in Motor2.values():
     GPIO.setup(pin, GPIO.OUT)
 
