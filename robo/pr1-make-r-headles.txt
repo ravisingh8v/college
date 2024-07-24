@@ -1,0 +1,28 @@
+step 1 : Download raspberry pi imager for windows. And connect sd card to laptop
+
+step 2 : Select the operating system (raspberry pi OS 32-bit)
+
+step 3 : Select storage
+
+step 4 : click on setting icon and set hostname. click to enable SSH
+(hostname: raspberrypi)
+
+step 5 : click to configure wireless LAN and select country (IN).
+
+step 6 : click to save.
+
+step 7 : clkck on write.
+
+step 8 : click on yes.
+
+step 9 : Verifying raspberry pi.
+
+step 10 : click on continue
+
+step 11 : check the connection in your mobile hostpot of raspberrypi
+
+step 12 : On cmd promt execute these command:
+                1) ping raspberrypi
+                2)ssh admin@raspberrypi
+
+Output: 
