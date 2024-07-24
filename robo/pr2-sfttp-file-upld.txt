@@ -1,0 +1,16 @@
+step 1 : open cmd and type following command
+                1) ping raspberrypi Or ping 162.168.207.244
+                2)ssh admin@raspberrypi or ssh admin@162.168.207.244
+                3) enter password of admin
+
+step 2 : Download the filezilla (client) on your laptop or computer
+
+step 3 : enter host, username, password, and port name which we have set at the time of raspberrypi imager setup 
+
+step 4 : click on quick connect
+
+step 5 : now select file or app from local site which going to shown below in file zilla
+
+step 6 : upload any file by right clicking and click upload button
+
+step 7 : now it is available in our remote site on raspberrypi
