@@ -1,3 +1,9 @@
+# Left Right Resulting Movement
+# Forward Backward Turn Right
+# Backward Forward Turn Left
+# Forward Forward Go Straight
+# Backward Backward Reverse
+
 import RPi.GPIO as GPIO
 from time import sleep
 
@@ -34,6 +40,30 @@ try:
         EN1.ChangeDutyCycle(0)
         EN2.ChangeDutyCycle(0)
         sleep(5)
+
+        # Left Turn
+        print("LEFT TURN")
+        left_speed = 10
+        right_speed = 80
+        EN1.ChangeDutyCycle(left_speed)
+        EN2.ChangeDutyCycle(right_speed)
+        GPIO.output(Motor1['input1'], GPIO.LOW)
+        GPIO.output(Motor1['input2'], GPIO.HIGH)
+        GPIO.output(Motor2['input1'], GPIO.HIGH)
+        GPIO.output(Motor2['input2'], GPIO.LOW)
+        sleep(1)
+
+        # Right Turn
+        print("RIGHT TURN")
+        left_speed = 80
+        right_speed = 10
+        EN1.ChangeDutyCycle(left_speed)
+        EN2.ChangeDutyCycle(right_speed)
+        GPIO.output(Motor1['input1'], GPIO.HIGH)
+        GPIO.output(Motor1['input2'], GPIO.LOW)
+        GPIO.output(Motor2['input1'], GPIO.LOW)
+        GPIO.output(Motor2['input2'], GPIO.HIGH)
+        sleep(1)
 
         # Backward Motion
         for duty_cycle in range(40, 45):
